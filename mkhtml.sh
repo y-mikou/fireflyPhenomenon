@@ -52,14 +52,14 @@ fi
 
 #変換実行
 cnt=0
-  list=`find ${inputPath} -type f`
+  list=`find ${inputPath} -maxdepth 1 -type f `
 
 for file in ${list}; do
   filename=`basename $file`
   ext=${filename##*.}
   if [[ $ext == "md" ]]; then
     body=${filename%%.*}
-    `pandoc ${inputPath}${body}.md -o ${outputPath}${body}.html`
+    `pandoc ${inputPath}${body}.md --template=templateMd2Html.html -o ${outputPath}${body}.html`
     echo "✓ ${inputPath}${body}.md を ${outputPath}${body}.html として変換・出力しました。"
     cnt=$((cnt+1))
   fi
